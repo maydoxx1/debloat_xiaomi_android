@@ -1,20 +1,24 @@
 @echo off
-echo 🔍 Checking for ADB...
+title Xiaomi Debloater
+setlocal enabledelayedexpansion
 
-where adb >nul 2>&1
-if %errorlevel% neq 0 (
-    echo ❌ ADB not found. Please install Android Platform Tools.
+:: Prompt user for ADB path
+echo 🔍 Please enter the full path to your ADB executable (e.g., C:\platform-tools\adb.exe):
+set /p ADB_PATH=ADB path: 
+
+if not exist "%ADB_PATH%" (
+    echo ❌ ADB not found at the specified location. Please check the path and try again.
     pause
     exit /b
 )
 
-adb start-server
-adb devices
+:: Start ADB server and list devices
+"%ADB_PATH%" start-server
+"%ADB_PATH%" devices
 echo 📱 Ensure your device is connected and authorized.
 pause
 
 :: Xiaomi packages to uninstall
-setlocal enabledelayedexpansion
 set PACKAGES=^
 com.miui.analytics com.miui.msa.global com.miui.systemAdSolution com.miui.daemon com.miui.hybrid ^
 com.miui.hybrid.accessory com.xiaomi.joyose com.xiaomi.mipicks com.xiaomi.payment com.xiaomi.glgm ^
@@ -38,10 +42,10 @@ if /I not "%confirm%"=="y" (
 
 for %%P in (%PACKAGES%) do (
     echo 📦 Uninstalling %%P...
-    adb shell pm uninstall --user 0 %%P
+    "%ADB_PATH%" shell pm uninstall --user 0 %%P
 )
 
 echo ✅ Debloating complete.
-echo Rebooting
-adb reboot
+echo Rebooting device...
+"%ADB_PATH%" reboot
 pause
