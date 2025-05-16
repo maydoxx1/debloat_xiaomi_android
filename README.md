@@ -1,6 +1,6 @@
 # Xiaomi Debloater 🚫📱
 
-A simple, no-bullshit shell script to debloat MIUI-based Xiaomi devices via ADB. Removes spyware, adware, and system bloat safely — without root.
+A simple, no-bullshit shell script to debloat MIUI-based Hyper OS-based Xiaomi devices via ADB. Removes spyware, adware, and system bloat safely — without root.
 
 ## 🔧 Requirements
 
