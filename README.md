@@ -28,3 +28,10 @@ This script is safe for most users, but back up your device first.
 You can re-enable apps via Xiaomi's App Store or factory reset if needed.
 
 Tested on multiple MIUI / HyperOS builds, but use at your own risk.
+# Note
+some apps requires root so try to disable them
+```bash
+adb shell pm disable-user --user 0 com.xiaomi.midrop 
+adb shell pm disable-user --user 0 com.miui.notes 
+adb shell pm disable-user --user 0 com.miui.compass
+```
