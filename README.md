@@ -6,7 +6,7 @@ A simple, no-bullshit shell script to debloat MIUI-based Hyper OS-based Xiaomi d
 
 - ADB (Android Platform Tools)
 - Xiaomi device with USB debugging enabled
-- Linux, macOS, or WSL
+- Linux, macOS, or Windows
 
 ## 🚀 Usage
 
