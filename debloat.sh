@@ -25,7 +25,6 @@ com.xiaomi.glgm
 com.xiaomi.mirecycle
 com.xiaomi.midrop
 com.xiaomi.mircs
-com.xiaomi.scanner
 com.xiaomi.xmsf
 com.xiaomi.xmsfkeeper
 com.miui.player
