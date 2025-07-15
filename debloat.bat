@@ -3,11 +3,11 @@ title Xiaomi Debloater
 setlocal enabledelayedexpansion
 
 :: Prompt user for ADB path
-echo 🔍 Please enter the full path to your ADB executable (e.g., C:\platform-tools\adb.exe):
+echo ! Please enter the full path to your ADB executable (e.g., C:\platform-tools\adb.exe):
 set /p ADB_PATH=ADB path: 
 
 if not exist "%ADB_PATH%" (
-    echo ❌ ADB not found at the specified location. Please check the path and try again.
+    echo !! ADB not found at the specified location. Please check the path and try again.
     pause
     exit /b
 )
@@ -15,7 +15,7 @@ if not exist "%ADB_PATH%" (
 :: Start ADB server and list devices
 "%ADB_PATH%" start-server
 "%ADB_PATH%" devices
-echo 📱 Ensure your device is connected and authorized.
+echo -------- Ensure your device is connected and authorized.
 pause
 
 :: Xiaomi packages to uninstall
@@ -31,21 +31,36 @@ com.miui.android.fashiongallery com.miui.smarttravel com.miui.voiceassistant com
 com.miui.cloudbackup com.miui.cloudservice com.miui.cloudservice.sysbase com.miui.micloudsync ^
 com.mi.globalminusscreen com.mi.globalbrowser com.mi.android.globalFileexplorer
 
-echo ⚠️ The following Xiaomi apps will be uninstalled:
+echo ===== The following Xiaomi apps will be uninstalled:
 for %%P in (%PACKAGES%) do echo  - %%P
 
-set /p confirm=❓ Proceed with uninstalling these apps? (y/n): 
+set /p confirm=? Proceed with uninstalling these apps? (y/n): 
 if /I not "%confirm%"=="y" (
-    echo ❌ Aborted.
+    echo !!! Aborted.
     exit /b
 )
 
+:: Uninstall each package (skip errors automatically)
 for %%P in (%PACKAGES%) do (
-    echo 📦 Uninstalling %%P...
-    "%ADB_PATH%" shell pm uninstall --user 0 %%P
+    echo --- Uninstalling %%P...
+    "%ADB_PATH%" shell pm list packages | findstr "%%P" >nul && (
+        "%ADB_PATH%" shell pm uninstall --user 0 %%P
+    ) || (
+        echo --- %%P not found. Skipping.
+    )
 )
 
-echo ✅ Debloating complete.
-echo Rebooting device...
+:: Attempt disabling packages (skip if already removed)
+for %%D in (com.xiaomi.midrop com.miui.notes com.miui.compass) do (
+    echo --- Trying to disable %%D (if exists)...
+    "%ADB_PATH%" shell pm list packages | findstr "%%D" >nul && (
+        "%ADB_PATH%" shell pm disable-user --user 0 %%D
+    ) || (
+        echo --- %%D not found. Skipping.
+    )
+)
+
+echo === Debloating complete.
+echo === Rebooting device...
 "%ADB_PATH%" reboot
 pause
