@@ -26,7 +26,7 @@ com.duokan.phone.remotecontroller com.duokan.phone.remotecontroller.peel.plugin 
 com.miui.virtualsim com.miui.vsimcore com.miui.translationservice com.miui.mishare.connectivity
 com.miui.android.fashiongallery com.miui.smarttravel com.miui.voiceassistant com.miui.miservice
 com.miui.cloudbackup com.miui.cloudservice com.miui.cloudservice.sysbase com.miui.micloudsync
-com.mi.globalminusscreen com.mi.globalbrowser com.mi.android.globalFileexplorer
+com.mi.globalminusscreen com.mi.globalbrowser com.mi.android.globalFileexplorer com.aura.oobe.deutsche
 )
 
 echo "📦 The following Xiaomi apps will be uninstalled:"
